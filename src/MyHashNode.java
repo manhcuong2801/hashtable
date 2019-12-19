@@ -47,7 +47,7 @@ class MyHashNode<K, V>
         return index; 
     } 
   
-     public V remove(K key) 
+     public void remove(K key) 
     { 
          int bucketIndex = getBucketIndex(key); 
   
@@ -64,7 +64,7 @@ class MyHashNode<K, V>
         } 
   
          if (head == null) 
-            return null; 
+            return ; 
   
        size--;
   
@@ -74,7 +74,7 @@ class MyHashNode<K, V>
         else
             bucketArray.set(bucketIndex, head.next); 
   
-        return head.value; 
+//        return head.value; 
     } 
   
  
@@ -93,7 +93,29 @@ class MyHashNode<K, V>
         // If key not found 
         return null; 
     } 
+    public MyHashNode<K,V> search(K key) 
+    { 
+         int bucketIndex = getBucketIndex(key); 
+        MyHashNode<K, V> head = bucketArray.get(bucketIndex); 
   
+         while (head != null) 
+        { 
+            if (head.key.equals(key)) 
+                return head; 
+            head = head.next; 
+            
+        } 
+  
+        // If key not found 
+        return null; 
+    } 
+    public void set(K key, V newValue) {
+        
+        MyHashNode<K,V> e = search(key); V v = get(key);
+        if ((e.key.equals(key)) && (v != null)) {
+            e.value = newValue;   
+        }
+    }
      public void add(K key, V value) 
     { 
           int bucketIndex = getBucketIndex(key); 
@@ -141,13 +163,16 @@ class MyHashNode<K, V>
         map.add("this",1 ); 
         map.add("coder",2 ); 
         map.add("this",4 ); 
-        map.add("hi",10 ); 
+        map.add("x",10 ); 
         map.add("hi",7 ); 
         map.add("hi",5 ); 
-        System.out.println(map.size()); 
-        System.out.println(map.remove("this")); 
-        System.out.println(map.remove("this")); 
+        map.set("x", 8);
+        System.out.println(map.get("coder"));
         System.out.println(map.size()); 
         System.out.println(map.isEmpty()); 
+        System.out.println(map.get("x"));
+        System.out.println(map.search("hi").value);
+        map.remove("this");
+        map.toString();
     } 
 } 
